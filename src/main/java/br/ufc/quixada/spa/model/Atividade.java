@@ -11,7 +11,7 @@ public class Atividade {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@Column(nullable=false, unique=true)
 	private String nome;
@@ -19,11 +19,11 @@ public class Atividade {
 	@Column(nullable=false)
 	private int qtdVagas;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

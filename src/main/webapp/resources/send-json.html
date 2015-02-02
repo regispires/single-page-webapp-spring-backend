@@ -1,0 +1,31 @@
+<html>
+<head>
+</head>
+<body>
+<h1>Send JSON</h1>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  sendAjax();
+});
+ 
+function sendAjax() {
+ 
+$.ajax({ 
+    url: "/spa-spring-backend/atividade", 
+    type: 'POST', 
+    dataType: 'json', 
+    data: "{\"nome\":\"Minicurso jQuery\",\"qtdVagas\":25}", 
+    contentType: 'application/json',
+    mimeType: 'application/json',
+    success: function(data) { 
+        alert(data.nome + " " + data.qtdVagas);
+    },
+    error:function(data,status,er) { 
+        alert("error: "+data+" status: "+status+" er:"+er);
+    }
+});
+}
+</script>
+</body>
+</html>

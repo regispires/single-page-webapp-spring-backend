@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,15 +27,17 @@ public class AtividadeController {
 		return atividadeService.find(Atividade.class);
 	}
 	
-	@RequestMapping(value="/test/{name}", method = RequestMethod.GET)
-	public @ResponseBody Atividade test(@PathVariable String name) {
+	@RequestMapping(value="{id}", method = RequestMethod.GET)
+	public @ResponseBody Atividade findById(@PathVariable Integer id) {
 		
-		Atividade a = new Atividade();
-		a.setId(1l);
-		a.setNome(name);
-		a.setQtdVagas(20);
-		return a;
- 
+		return atividadeService.find(Atividade.class, id);
 	}
 
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody Atividade save(@RequestBody Atividade atividade) {
+		
+		atividadeService.save(atividade);
+		return atividade;
+	}
+	
 }
