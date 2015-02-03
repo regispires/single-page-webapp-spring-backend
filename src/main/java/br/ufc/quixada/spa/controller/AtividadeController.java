@@ -53,9 +53,10 @@ public class AtividadeController {
 		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Atividade removida com sucesso");
 	}
 
-	@RequestMapping(value="{id}", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	public @ResponseBody ResponseStatusMessage update(Atividade atividade) {
 		log.debug("Atividade - PUT");
+		log.debug("Updating Atividade: {}", atividade);
 		atividadeService.update(atividade);
 		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Atividade atualizada com sucesso");
 	}
