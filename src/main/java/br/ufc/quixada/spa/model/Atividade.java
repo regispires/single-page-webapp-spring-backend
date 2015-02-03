@@ -9,6 +9,12 @@ import javax.persistence.Id;
 @Entity
 public class Atividade {
 
+	public Atividade() {}
+	
+	public Atividade(Integer id) {
+		this.id = id;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

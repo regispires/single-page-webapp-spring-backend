@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = { "br.ufc" })
+@ComponentScan(	basePackages = {  "br.ufc" } )
 @EnableTransactionManagement
 public class AppConfig extends WebMvcConfigurerAdapter {
 
@@ -46,8 +46,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public JpaTransactionManager jpaTransactionManage() {
 		JpaTransactionManager txManager = new JpaTransactionManager();
-		txManager
-				.setEntityManagerFactory(localContainerEntityManagerFactoryBean().nativeEntityManagerFactory);
+		txManager.setEntityManagerFactory(localContainerEntityManagerFactoryBean().nativeEntityManagerFactory);
 		return txManager;
 	}
 }

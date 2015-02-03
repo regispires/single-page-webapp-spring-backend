@@ -6,82 +6,90 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class NamedParams implements Map<String, Object>, Serializable {
+public class SimpleMap<K, V> implements Map<K, V>, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Map<String, Object> realMap;
-
+	private Map<K, V> realMap;
 	
-	public NamedParams(Object... entries) {
+	public SimpleMap(Object... entries) {
 		putValues(entries);
 	}
 	
-	public NamedParams putValues(Object... entries) {
+	public SimpleMap<K, V> putValues(Object... entries) {
 		if (entries.length % 2 != 0)
-			throw new IllegalArgumentException("Espera-se número par de objetos: " + entries.length);
+			throw new IllegalArgumentException("An even number of objects must be given: " + entries.length);
 		
 		if (this.realMap == null)
-			this.realMap = new HashMap<String, Object>(entries.length / 2);
+			this.realMap = new HashMap<K, V>(entries.length / 2);
 		
 		for (int i = 0; i < entries.length; i += 2) {
 			Object key   = entries[i];
 			
-			if (! (key instanceof String))
-				throw new IllegalArgumentException("O parametro '" + i + "' deveria ser uma String.");
-			
 			Object value = (i + 1 < entries.length ? entries[i + 1] : null);
-			realMap.put((String)key, (Object)value);
+			realMap.put((K)key, (V)value);
 		}
 		
 		return this;
 	}
 	
+	@Override
 	public void clear() {
 		realMap.clear();		
 	}
 
+	@Override
 	public boolean containsKey(Object key) {
 		return realMap.containsKey(key);
 	}
 
+	@Override
 	public boolean containsValue(Object value) {
 		return realMap.containsValue(value);
 	}
 
-	public Set<Entry<String, Object>> entrySet() {
+	@Override
+	public Set<Entry<K, V>> entrySet() {
 		return realMap.entrySet();
 	}
 
-	public Object get(Object key) {
+	@Override
+	public V get(Object key) {
 		return realMap.get(key);
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return realMap.isEmpty();
 	}
 
-	public Set<String> keySet() {
+	@Override
+	public Set<K> keySet() {
 		return realMap.keySet();
 	}
 
-	public Object put(String key, Object value) {
+	@Override
+	public V put(K key, V value) {
 		return realMap.put(key, value);
 	}
 
-	public void putAll(Map<? extends String, ? extends Object> t) {
+	@Override
+	public void putAll(Map<? extends K, ? extends V> t) {
 		realMap.putAll(t);
 	}
 
-	public Object remove(Object key) {
+	@Override
+	public V remove(Object key) {
 		return realMap.remove(key);
 	}
 
+	@Override
 	public int size() {
 		return realMap.size();
 	}
 
-	public Collection<Object> values() {
+	@Override
+	public Collection<V> values() {
 		return realMap.values();
 	}
 
