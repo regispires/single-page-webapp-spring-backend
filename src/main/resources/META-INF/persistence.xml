@@ -6,7 +6,11 @@
                http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
   <persistence-unit name="dev-h2" transaction-type="RESOURCE_LOCAL">
-	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+  	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+	<class>br.ufc.quixada.spa.model.Atividade</class>
+	<class>br.ufc.quixada.spa.model.Fone</class>
+	<class>br.ufc.quixada.spa.model.Instituicao</class>
+	<class>br.ufc.quixada.spa.model.Participante</class>
     <properties>
       <property name="javax.persistence.jdbc.url" 
       			value="jdbc:h2:file:~/h2/sisevent" />
@@ -17,6 +21,8 @@
       <property name="javax.persistence.jdbc.password" 
                 value="" />
 
+      <property name="hibernate.dialect" 
+                value="org.hibernate.dialect.H2Dialect"/>
       <property name="hibernate.hbm2ddl.auto" value="update" />
       <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.format_sql" value="true" />
@@ -24,7 +30,7 @@
   </persistence-unit>
   
   <persistence-unit name="dev-pgsql" transaction-type="RESOURCE_LOCAL">
-	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+  	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <properties>
       <property name="javax.persistence.jdbc.url" 
                 value="jdbc:postgresql://localhost/sisevent" />
@@ -35,6 +41,8 @@
       <property name="javax.persistence.jdbc.password" 
                 value="postgres" />
 
+      <property name="hibernate.dialect" 
+                value="org.hibernate.dialect.PostgreSQLDialect"/>
       <property name="hibernate.hbm2ddl.auto" value="update" />
       <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.format_sql" value="true" />

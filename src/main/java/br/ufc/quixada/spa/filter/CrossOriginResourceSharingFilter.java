@@ -12,23 +12,23 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet Filter implementation class ExternalRequestRestFilter
+ * Servlet Filter to enable Cross Origin Requests for a RESTful Web Service.
+ * It includes headers for Cross-Origin Resource Sharing (CORS) in the response.
  */
 @WebFilter("/*")
-public class ExternalRequestRestFilter implements Filter {
+public class CrossOriginResourceSharingFilter implements Filter {
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 	
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Filtrando!!!");
 		HttpServletResponse response = (HttpServletResponse) resp;
 
 		// Used to allow AJAX requests from other hosts 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
-		
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 		chain.doFilter(request, response);
 	}
 

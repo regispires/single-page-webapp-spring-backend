@@ -52,10 +52,11 @@ public class AtividadeController {
 		atividadeService.delete(new Atividade(id));
 		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Atividade removida com sucesso");
 	}
-
-	@RequestMapping(method = RequestMethod.PUT)
-	public @ResponseBody ResponseStatusMessage update(Atividade atividade) {
+	
+	@RequestMapping(value="{id}", method = RequestMethod.PUT)
+	public @ResponseBody ResponseStatusMessage update(Atividade atividade, @PathVariable Integer id) {
 		log.debug("Atividade - PUT");
+		atividade.setId(id);
 		log.debug("Updating Atividade: {}", atividade);
 		atividadeService.update(atividade);
 		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Atividade atualizada com sucesso");
