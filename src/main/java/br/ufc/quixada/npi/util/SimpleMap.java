@@ -17,17 +17,21 @@ public class SimpleMap<K, V> implements Map<K, V>, Serializable {
 	}
 	
 	public SimpleMap<K, V> putValues(Object... entries) {
-		if (entries.length % 2 != 0)
+		if (entries.length % 2 != 0) {
 			throw new IllegalArgumentException("An even number of objects must be given: " + entries.length);
+		}
 		
-		if (this.realMap == null)
+		if (this.realMap == null) {
 			this.realMap = new HashMap<K, V>(entries.length / 2);
+		}
 		
 		for (int i = 0; i < entries.length; i += 2) {
-			Object key   = entries[i];
+			@SuppressWarnings("unchecked")
+			K key = (K)entries[i];
 			
-			Object value = (i + 1 < entries.length ? entries[i + 1] : null);
-			realMap.put((K)key, (V)value);
+			@SuppressWarnings("unchecked")
+			V value = (V)(i + 1 < entries.length ? entries[i + 1] : null);
+			realMap.put(key, value);
 		}
 		
 		return this;

@@ -38,7 +38,6 @@ public class AtividadeController {
 		return atividadeService.find(Atividade.class, id);
 	}
 	
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody ResponseStatusMessage save(Atividade atividade) {
 		log.debug("Atividade - POST");

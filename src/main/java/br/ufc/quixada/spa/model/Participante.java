@@ -3,17 +3,25 @@ package br.ufc.quixada.spa.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Participante {
@@ -22,6 +30,20 @@ public class Participante {
 
 	public Participante(Integer id) {
 		this.id = id;
+	}
+
+	public Participante(Integer id, String nome, String email,
+			Double valorPago, Date dataPagamento, List<Fone> fones,
+			List<Atividade> atividades, Instituicao instituicao) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.valorPago = valorPago;
+		this.dataPagamento = dataPagamento;
+		this.fones = fones;
+		this.atividades = atividades;
+		this.instituicao = instituicao;
 	}
 
 	@Id
@@ -37,14 +59,19 @@ public class Participante {
 
 	private Double valorPago;
 	
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/mm/yyyy")
 	private Date dataPagamento;
 
-	@OneToMany(mappedBy="participante")
-	private List<Fone> fone;
+	@OneToMany(mappedBy="participante", cascade=CascadeType.ALL)
+	@JsonManagedReference
+	private List<Fone> fones;
 	
 	@ManyToMany
-	private List<Atividade> atividade;
+	@JoinTable(name="participante_atividade", joinColumns={@JoinColumn(name="participante_id")}, inverseJoinColumns={@JoinColumn(name="atividade_id")})
+	// Especificar join column e inverse join column para evitar que fique: atividades_id e participantes_id 
+	@JsonBackReference
+	private List<Atividade> atividades;
 	
 	@ManyToOne
 	private Instituicao instituicao;
@@ -87,6 +114,30 @@ public class Participante {
 
 	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
+	}
+
+	public List<Fone> getFones() {
+		return fones;
+	}
+
+	public void setFones(List<Fone> fones) {
+		this.fones = fones;
+	}
+
+	public List<Atividade> getAtividades() {
+		return atividades;
+	}
+
+	public void setAtividades(List<Atividade> atividades) {
+		this.atividades = atividades;
+	}
+
+	public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
 	}
 
 	@Override

@@ -14,6 +14,12 @@ public class Instituicao {
 	public Instituicao(Integer id) {
 		this.id = id;
 	}
+	
+	public Instituicao(Integer id, String sigla, String nome) {
+		this.id = id;
+		this.sigla = sigla;
+		this.nome = nome;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
