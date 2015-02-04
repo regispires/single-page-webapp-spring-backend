@@ -39,8 +39,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-		//emf.setPersistenceUnitName("dev-h2");
-		emf.setPersistenceUnitName("dev-pgsql");
+		emf.setPersistenceUnitName("dev-h2");
+		//emf.setPersistenceUnitName("dev-pgsql");
 		return emf;
 	}
 
