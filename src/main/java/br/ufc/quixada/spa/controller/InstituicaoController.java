@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ public class InstituicaoController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Inject
+	@Qualifier("genericServiceImpl")
 	private GenericService<Instituicao> instituicaoService;
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -40,7 +42,7 @@ public class InstituicaoController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody ResponseStatusMessage save(Instituicao atividade) {
+	public @ResponseBody ResponseStatusMessage insert(Instituicao atividade) {
 		log.debug("Instituicao - POST");
 		instituicaoService.save(atividade);
 		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Instituicao inserida com sucesso");

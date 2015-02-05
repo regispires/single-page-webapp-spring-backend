@@ -40,7 +40,7 @@ public class ParticipanteController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody ResponseStatusMessage save(Participante participante) {
+	public @ResponseBody ResponseStatusMessage insert(Participante participante) {
 		log.debug("Participante - POST");
 		participanteService.save(participante);
 		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Participante inserido com sucesso");

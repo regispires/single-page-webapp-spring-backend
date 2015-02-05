@@ -20,15 +20,14 @@ import br.ufc.quixada.npi.repository.GenericRepository;
 @Named
 public class JpaGenericRepositoryImpl<T> implements GenericRepository<T> {
 
-	private static Logger logger = LoggerFactory
-			.getLogger(JpaGenericRepositoryImpl.class);
+	private static Logger log = LoggerFactory.getLogger(JpaGenericRepositoryImpl.class);
 
 	protected EntityManager em;
 
 	@Override
 	@PersistenceContext
 	public void setEntityManager(EntityManager em) {
-		logger.debug("Setting EntityManager: {} {} ", this.getClass(), em);
+		log.debug("Setting EntityManager: {} {} ", this.getClass(), em);
 		this.em = em;
 	}
 
@@ -77,30 +76,33 @@ public class JpaGenericRepositoryImpl<T> implements GenericRepository<T> {
 		return result;
 	}
 
+	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public List<T> find(String queryName, Map<String, Object> namedParams) {
+	public List find(String queryName, Map<String, Object> namedParams) {
 		return find(QueryType.NAMED, queryName, namedParams);
 	}
 
+	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public List<T> find(QueryType type, String query,
+	public List find(QueryType type, String query,
 			Map<String, Object> namedParams) {
 		return find(type, query, namedParams, -1, -1);
 	}
 
+	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public List<T> find(String queryName, Map<String, Object> namedParams,
+	public List find(String queryName, Map<String, Object> namedParams,
 			int firstResult, int maxResults) {
 		return find(QueryType.NAMED, queryName, namedParams, firstResult,
 				maxResults);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	@Transactional(readOnly=true)
-	public List<T> find(QueryType type, String query,
+	public List find(QueryType type, String query,
 			Map<String, Object> namedParams, int firstResult, int maxResults) {
-		List<T> result = null;
+		List result = null;
 		Query q;
 		if (type == QueryType.JPQL) {
 			q = em.createQuery(query);
@@ -109,16 +111,10 @@ public class JpaGenericRepositoryImpl<T> implements GenericRepository<T> {
 		} else if (type == QueryType.NAMED) {
 			q = em.createNamedQuery(query);
 		} else {
-			throw new IllegalArgumentException("Tipo de Query inválido: "
-					+ type);
+			throw new IllegalArgumentException("Invalid query type: " + type);
 		}
 
-		if (namedParams != null) {
-			Set<String> keys = namedParams.keySet();
-			for (String key : keys) {
-				q.setParameter(key, namedParams.get(key));
-			}
-		}
+		setNamedParameters(q, namedParams);
 
 		if (firstResult >= 0 && maxResults >= 0) {
 			q = q.setFirstResult(firstResult).setMaxResults(maxResults);
@@ -129,24 +125,33 @@ public class JpaGenericRepositoryImpl<T> implements GenericRepository<T> {
 		return result;
 	}
 
-	@Override
-	public T findFirst(String query, Map<String, Object> namedParams) {
-		return findFirst(query, namedParams, -1);
+	private void setNamedParameters(Query q, Map<String, Object> namedParams) {
+		if (namedParams != null) {
+			log.debug("Named parameters: {}", namedParams);
+			Set<String> keys = namedParams.keySet();
+			for (String key : keys) {
+				q.setParameter(key, namedParams.get(key));
+			}
+		}
 	}
 	
-
 	@Override
-	public T findFirst(String query, Map<String, Object> namedParams,
-			int firstResult) {
-		return findFirst(QueryType.NAMED, query, namedParams, firstResult);
+	public Object findFirst(String query, Map<String, Object> namedParams) {
+		return findFirst(QueryType.NAMED, query, namedParams);
 	}
 
 	@Override
-	public T findFirst(QueryType type, String query,
-			Map<String, Object> namedParams, int firstResult) {
+	public Object findFirst(QueryType type, String query, Map<String, Object> namedParams) {
 
-		List<T> result = find(type, query, namedParams, firstResult, 1);
+		@SuppressWarnings("rawtypes")
+		List result = find(type, query, namedParams, 0, 1);
 		return result == null || result.size() == 0 ? null : result.get(0);
 	}
 
+	public int executeUpdate(String sql, Map<String, Object> namedParams) {
+		Query q = em.createNativeQuery(sql);
+		setNamedParameters(q, namedParams);
+		return q.executeUpdate();
+	}
+	
 }

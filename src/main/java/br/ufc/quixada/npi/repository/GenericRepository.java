@@ -7,42 +7,42 @@ import javax.persistence.EntityManager;
 
 import br.ufc.quixada.npi.enumeration.QueryType;
 
-
-
 public interface GenericRepository<T> {
 
-	public abstract void setEntityManager(EntityManager em);
+	public void setEntityManager(EntityManager em);
 
-	public abstract void save(T entity);
+	public void save(T entity);
 	
-	public abstract void update(T entity);
+	public void update(T entity);
 
-	public abstract void delete(T entity);
+	public void delete(T entity);
 
-	public abstract T find(Class<T> entityClass, Object id);
+	public T find(Class<T> entityClass, Object id);
 
-	public abstract List<T> find(Class<T> entityClass);
+	public List<T> find(Class<T> entityClass);
 
-	public abstract List<T> find(Class<T> entityClass, int firstResult, int maxResults);
+	public List<T> find(Class<T> entityClass, int firstResult, int maxResults);
 
-	public abstract List<T> find(String queryName,
+	@SuppressWarnings("rawtypes")
+	public List find(String queryName,
 			Map<String, Object> namedParams);
 
-	public abstract List<T> find(QueryType type, String query,
+	@SuppressWarnings("rawtypes")
+	public List find(QueryType type, String query,
 			Map<String, Object> namedParams);
 
-	public abstract List<T> find(String queryName,
+	@SuppressWarnings("rawtypes")
+	public List find(String queryName,
 			Map<String, Object> namedParams, int firstResult, int maxResults);
 
-	public abstract List<T> find(QueryType type, String query,
+	@SuppressWarnings("rawtypes")
+	public List find(QueryType type, String query,
 			Map<String, Object> namedParams, int firstResult, int maxResults);
 
-	public abstract T findFirst(String query, Map<String, Object> namedParams);
+	public Object findFirst(String query, Map<String, Object> namedParams);
 
-	public abstract T findFirst(String query, Map<String, Object> namedParams,
-			int firstResult);
+	public Object findFirst(QueryType type, String query, Map<String, Object> namedParams);
 
-	public abstract T findFirst(QueryType type, String query,
-			Map<String, Object> namedParams, int firstResult);
+	public int executeUpdate(String sql, Map<String, Object> namedParams);
 
 }
