@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,10 +44,14 @@ public class InstituicaoController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody ResponseStatusMessage insert(Instituicao atividade) {
+	public @ResponseBody ResponseStatusMessage insert(@Valid Instituicao instituicao, BindingResult result) {
 		log.debug("Instituicao - POST");
-		instituicaoService.save(atividade);
-		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Instituicao inserida com sucesso");
+		if (result.hasErrors()) {
+			return new ResponseStatusMessage(ResponseStatus.ERROR, result.getFieldError().getDefaultMessage());
+		} else {
+			instituicaoService.save(instituicao);
+			return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Instituicao inserida com sucesso");
+		}
 	}
 	
 	@RequestMapping(value="{id}", method = RequestMethod.DELETE)

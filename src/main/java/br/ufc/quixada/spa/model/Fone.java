@@ -38,7 +38,6 @@ public class Fone {
 	private String operadora;
 
 	@ManyToOne
-	@JsonBackReference
 	private Participante participante;
 	
 	public Integer getId() {

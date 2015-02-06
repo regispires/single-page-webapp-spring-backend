@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Instituicao {
@@ -29,6 +30,8 @@ public class Instituicao {
 	private String sigla;
 
 	@Column(nullable=false)
+	
+	@Size(min = 5, message = "O nome deve ter no mínimo 5 caracteres")
 	private String nome;
 
 	public Integer getId() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public class AtividadeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody ResponseStatusMessage insert(Atividade atividade) {
+	public @ResponseBody ResponseStatusMessage insert(@Valid Atividade atividade) {
 		log.debug("Atividade - POST");
 		atividadeService.save(atividade);
 		return new ResponseStatusMessage(ResponseStatus.SUCCESS, "Atividade inserida com sucesso");

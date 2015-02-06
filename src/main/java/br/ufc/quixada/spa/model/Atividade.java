@@ -8,7 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -34,12 +36,14 @@ public class Atividade {
 	private Integer id;
 	
 	@Column(nullable=false, unique=true)
+	@Size(min = 5, message = "O nome deve ter no mínimo 5 caracteres")
 	private String nome;
 	
 	private Integer qtdVagas;
 
 	@ManyToMany(mappedBy="atividades")
-	@JsonManagedReference
+	//@JsonManagedReference
+	@JsonIgnore
 	private List<Participante> participantes;
 	
 	
