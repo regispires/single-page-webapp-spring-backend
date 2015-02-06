@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 public class Fone {
 
@@ -25,8 +23,6 @@ public class Fone {
 		this.operadora = operadora;
 		this.participante = participante;
 	}
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

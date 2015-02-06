@@ -11,7 +11,6 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Atividade {
@@ -42,7 +41,6 @@ public class Atividade {
 	private Integer qtdVagas;
 
 	@ManyToMany(mappedBy="atividades")
-	//@JsonManagedReference
 	@JsonIgnore
 	private List<Participante> participantes;
 	
