@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
@@ -22,19 +21,19 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-	
+
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/**").addResourceLocations("/public/");
     }
 	
-	@Bean
-	public InternalResourceViewResolver internalResourceViewResolver() {
-	  InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-	  resolver.setPrefix("/WEB-INF/view/");
-	  resolver.setSuffix(".jsp");
-	  return resolver;
-	}
+//	@Bean
+//	public InternalResourceViewResolver internalResourceViewResolver() {
+//	  InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//	  resolver.setPrefix("/WEB-INF/view/");
+//	  resolver.setSuffix(".jsp");
+//	  return resolver;
+//	}
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {
